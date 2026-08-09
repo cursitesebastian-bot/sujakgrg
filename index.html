@@ -13,9 +13,9 @@
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
         <style>
             :root{
-                --ink:#1b1b1be0; --ink-2:#1c1b1bd3; --paper:#f6b504; --dim:#fcf7f7;
-                --gold:#eec869; --gold-soft:#b87927; --line:rgba(248, 241, 241, 0.12);
-                --yellow:#d3b923;
+                --ink:#1e1e1fe0; --ink-2:#212629e0; --paper:#f6b504; --dim:#fafafa;
+                --gold:#eec869; --gold-soft:#b87927; --line:rgba(114, 95, 32, 0.442);
+                --yellow:#e9c811;
                 --ease:cubic-bezier(.22,1,.36,1);
             }
             *{
@@ -92,9 +92,9 @@
                 content:"";
                 position:fixed;
                 inset:0;
-                z-index:9998;
+                z-index:1000;
                 pointer-events:none;
-                opacity:.05;
+                opacity:0.0;
                 background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
             }
             body::before{
@@ -103,7 +103,7 @@
                 inset:0;
                 z-index:9997;
                 pointer-events:none;
-                box-shadow:inset 0 0 260px 40px rgba(0,0,0,.55)
+                box-shadow:inset 0 0 260px 40px rgba(22, 22, 22, 0.548)
              }
 
             /* cursor */
@@ -279,8 +279,8 @@
                 line-height:.82;
                 display:flex;
                 flex-wrap:wrap;
-                font-size:clamp(4rem,15vw,20rem);
-                color:#d3b923;
+                font-size:clamp(4rem,14vw,18rem);
+                color:#804c46fe;
             }
             .htitle .m{
                 overflow:hidden;
@@ -295,14 +295,19 @@
                 overflow:hidden;
                 max-width:34rem;
                 margin-top:28px;
-                color: white;
+                margin-left: 37px;
+                margin-right: 30px;
+                color: rgb(238, 236, 236);
             }
             .hsub p{
                 transform:translateY(120%);
                 animation:rise 1s var(--ease) 1.5s forwards;
-                color: hwite;
-                font-size:.8rem;
-                line-height:1.7
+                color: white;
+                font-size:.7rem;
+                line-height:1.7;
+                display:flex;
+                justify-content: center;
+                align-items:center;
             }
             .scrollcue{
                 position:absolute;
@@ -315,20 +320,22 @@
                 align-items:center;
                 gap:12px;
                 opacity:0;
-                animation:fadeUp 1s ease 2.6s forwards
+                animation:fadeUp 1s ease 2.6s forwards;
+                justify-content: center;
             }
             .scrollcue span{
                 font-size:10px;
                 letter-spacing:.4em;
                 text-transform:uppercase;
-                color:var(--dim)
+                color:var(--dim);
             }
             .scrollcue i{
                 width:1px;
                 height:40px;
                 background:var(--gold);
                 transform-origin:top;
-                animation:pulse 2.2s ease-in-out infinite
+                animation:pulse 2.2s ease-in-out infinite;
+                
             }
             @keyframes rise{to{transform:translateY(0)}}
             @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
@@ -340,7 +347,7 @@
                 border-top:1px solid var(--line);
                 border-bottom:1px solid var(--line);
                 overflow:hidden;
-                background:var(--ink-2)
+                background:var(--ink-2);
             }
             .mq-track{
                 display:flex;
@@ -363,6 +370,7 @@
             .reveal{
                 opacity:0;
                 transform:translateY(46px);
+                border-radius:10px;
                 transition:opacity 1s var(--ease),transform 1s var(--ease)
             }
             .reveal.in{
@@ -388,7 +396,8 @@
                 gap:40px;
                 align-items:center;
                 padding:64px 0;
-                border-top:1px solid var(--line)
+                border-top:1px solid var(--line);
+    
             }
             @media(min-width:768px){
                 .chap{
@@ -399,14 +408,16 @@
             .chap .pic{
                 position:relative;
                 overflow:hidden;
-                aspect-ratio:4/5
+                aspect-ratio:4/5;
+                border-radius:20px;
             }
             .chap .pic img{
                 width:100%;
                 height:100%;
                 object-fit:cover;
                 transform:scale(1.15);
-                will-change:transform
+                will-change:transform;
+                
             }
             .chap .pic .no{
                 position:absolute;
@@ -444,7 +455,8 @@
                 display:grid;
                 grid-template-columns:repeat(2,1fr);
                 grid-auto-rows:180px;
-                gap:12px
+                gap:12px;
+
             }
             @media(min-width:768px){
                 .bento{grid-template-columns:repeat(4,1fr);
@@ -459,7 +471,8 @@
             width:100%;
                 height:100%;
                 object-fit:cover;
-                transition:transform .9s var(--ease)
+                transition:transform .9s var(--ease);
+               
             }
             .tile:hover img{transform:scale(1.1)}
             .tile .ov{
@@ -467,7 +480,8 @@
                 inset:0;
                 background:linear-gradient(to top,rgba(0,0,0,.7),transparent 55%);
                 opacity:0;
-                transition:opacity .5s
+                transition:opacity .5s;
+                
             }
             .tile:hover .ov{opacity:1}
             .tile figcaption{
@@ -478,7 +492,8 @@
                 letter-spacing:.02em;
                 transform:translateY(12px);
                 opacity:0;
-                transition:.5s
+                transition:.5s;
+                
             }
             .tile:hover figcaption{transform:none;opacity:1}
             @media(min-width:768px){
@@ -511,7 +526,8 @@
                 align-items:center;
                 gap:14px;
                 background:var(--ink-2);
-                transition:border-color .4s,transform .4s
+                transition:border-color .4s,transform .4s;
+                border-radius:30px;
             }
             .clock:hover{
                 border-color:var(--gold);
@@ -666,7 +682,7 @@
                 flex-direction:column;
                 gap:10px;
                 max-height:320px;
-                overflow:auto
+                overflow:auto;
             }
             .pitem{
                 display:flex;
@@ -809,7 +825,7 @@
             <div class="hero-in">
                 <p class="kicker hero-k" style="color:#fff">A  Travel Journal — South Asia</p>
                 <h1 class="htitle" id="htitle"></h1>
-                <div class="hsub"><p>Temples at dawn, mountains, konark, victoria cross, howrah bridge, river markets, and slow miles on empty beaches — photographed and written by one traveller.</p></div>
+                <div class="hsub"><p>Temples at dawn, mountains, victoria cross, howrah bridge, river markets, and empty beaches — photographed and written by one traveller.</p></div>
             </div>
             <div class="scrollcue"><span>Scroll</span><i></i></div>
         </section>
