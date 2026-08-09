@@ -13,9 +13,9 @@
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
         <style>
             :root{
-                --ink:#1e1e1fe0; --ink-2:#212629e0; --paper:#f6b504; --dim:#fafafa;
-                --gold:#eec869; --gold-soft:#b87927; --line:rgba(114, 95, 32, 0.442);
-                --yellow:#e9c811;
+                --ink:#0f1216; --ink-2: #14181F; --paper:#dfb135; --dim:#fafafa;
+                --gold:#C7A45C; --gold-soft:#E8C97A; --line:rgba(114, 95, 32, 0.442);  --yellow:#e9c811;
+               
                 --ease:cubic-bezier(.22,1,.36,1);
             }
             *{
@@ -29,6 +29,10 @@
             }
             html{
                 scrollbar-width:none
+            }
+            html, body{
+                overflow-x:hidden;
+                max-width: 100%;
             }
             body{
                 margin:0;
@@ -280,7 +284,7 @@
                 display:flex;
                 flex-wrap:wrap;
                 font-size:clamp(4rem,14vw,18rem);
-                color:#804c46fe;
+                color: #D4AF37;
             }
             .htitle .m{
                 overflow:hidden;
@@ -313,6 +317,7 @@
                 position:absolute;
                 bottom:30px;
                 left:50%;
+                right:50%;
                 transform:translateX(-50%);
                 z-index:5;
                 display:flex;
@@ -335,6 +340,7 @@
                 background:var(--gold);
                 transform-origin:top;
                 animation:pulse 2.2s ease-in-out infinite;
+                align-items: center;
                 
             }
             @keyframes rise{to{transform:translateY(0)}}
@@ -364,7 +370,11 @@
                 font-size:clamp(1rem,3.4rem);
                 white-space:nowrap}
 
-            .mq-track .st{color:var(--gold);font-size:1rem;align-self:center}
+            .mq-track .st{
+                color:var(--gold);
+                font-size:1rem;
+                align-self:center;
+            }
 
             /* reveal */
             .reveal{
