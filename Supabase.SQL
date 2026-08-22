@@ -27,3 +27,4 @@ create policy "Public can delete stories"
   using (true);
 
 delete from stories;
+select id, name, created_at from stories order by created_at desc;
