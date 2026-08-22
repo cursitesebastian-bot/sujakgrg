@@ -17,3 +17,11 @@ create policy "Public can read stories"
 create policy "Public can add stories"
   on stories for insert
   with check (true);
+
+create policy "Public can delete stories"
+  on stories for delete
+  using (true);
+
+create policy "Public can delete stories"
+  on stories for delete
+  using (true);
