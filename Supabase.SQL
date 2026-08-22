@@ -25,3 +25,5 @@ create policy "Public can delete stories"
 create policy "Public can delete stories"
   on stories for delete
   using (true);
+
+delete from stories;
