@@ -124,6 +124,15 @@ body {
   text-overflow: ellipsis;
   color: #d1d1d6;
 }
+
+.story-time {
+  font-size: 10px;
+  max-width: 74px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #8a8a8f;
+}
  
 .hint {
   font-size: 13px;
@@ -237,6 +246,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.viewer-meta {
+  position: absolute;
+  top: 24px;
+  left: 60px;
+  right: 60px;
+  z-index: 2;
+  color: #fff;
+  font-size: 13px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viewer-meta .vname {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.viewer-meta .vtime {
+  color: rgba(255,255,255,0.75);
+  font-size: 12px;
 }
  
 .tap-zone {
@@ -1103,6 +1136,10 @@ body {
   <!-- Fullscreen story viewer -->
   <div class="viewer" id="viewer" hidden>
     <div class="progress-row" id="progressRow"></div>
+    <div class="viewer-meta" id="viewerMeta">
+      <span class="vname" id="viewerName"></span>
+      <span class="vtime" id="viewerTime"></span>
+    </div>
  
     <button class="close-btn" id="closeBtn" aria-label="Close">&times;</button>
     <button class="delete-btn" id="deleteBtn" aria-label="Delete story" title="Delete this story">🗑</button>
@@ -1481,6 +1518,8 @@ const hint = document.getElementById('hint');
  
 const viewer = document.getElementById('viewer');
 const viewerImage = document.getElementById('viewerImage');
+const viewerName = document.getElementById('viewerName');
+const viewerTime = document.getElementById('viewerTime');
 const progressRow = document.getElementById('progressRow');
 const closeBtn = document.getElementById('closeBtn');
 const deleteBtn = document.getElementById('deleteBtn');
@@ -1493,6 +1532,23 @@ let slideStart = 0;
 let remainingOnPause = null;
 let cachedStories = [];
 const seenIds = new Set(JSON.parse(localStorage.getItem('seen_story_ids') || '[]'));
+
+/* ---------- Formatting helpers ---------- */
+
+function formatStoryTimestamp(iso) {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const now = new Date();
+  const sameDay = d.toDateString() === now.toDateString();
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  const isYesterday = d.toDateString() === yesterday.toDateString();
+  const timePart = d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+  if (sameDay) return timePart;
+  if (isYesterday) return 'Yesterday · ' + timePart;
+  const datePart = d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+  return datePart + ' · ' + timePart;
+}
  
 /* ---------- Fetching shared stories ---------- */
  
@@ -1502,7 +1558,7 @@ async function fetchStories() {
     .from('stories')
     .select('*')
     .gt('created_at', cutoff)
-    .order('created_at', { ascending: true });
+    .order('created_at', { ascending: false });
  
   if (error) {
     console.error('Could not load stories:', error);
@@ -1570,10 +1626,15 @@ async function renderStoryBar() {
     const label = document.createElement('span');
     label.className = 'story-name';
     label.textContent = story.name;
+
+    const time = document.createElement('span');
+    time.className = 'story-time';
+    time.textContent = formatStoryTimestamp(story.created_at);
  
     ring.appendChild(inner);
     item.appendChild(ring);
     item.appendChild(label);
+    item.appendChild(time);
     item.addEventListener('click', () => openViewer(index));
     storyBar.appendChild(item);
   });
@@ -1659,6 +1720,8 @@ function showSlide(index) {
   currentIndex = index;
   const story = cachedStories[index];
   viewerImage.src = story.image;
+  viewerName.textContent = story.name || '';
+  viewerTime.textContent = formatStoryTimestamp(story.created_at);
   markSeen(story.id);
  
   const fills = progressRow.querySelectorAll('.progress-fill');
