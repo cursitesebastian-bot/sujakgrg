@@ -145,7 +145,7 @@ body {
   position: fixed;
   inset: 0;
   background: #000;
-  z-index: 999;
+  z-index: 1200;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1517,6 +1517,8 @@ const fileInput = document.getElementById('fileInput');
 const hint = document.getElementById('hint');
  
 const viewer = document.getElementById('viewer');
+const siteNav = document.getElementById('nav');
+const siteMobileNav = document.getElementById('mnav');
 const viewerImage = document.getElementById('viewerImage');
 const viewerName = document.getElementById('viewerName');
 const viewerTime = document.getElementById('viewerTime');
@@ -1689,13 +1691,19 @@ function openViewer(index) {
   currentIndex = index;
   buildProgressBars(cachedStories.length);
   viewer.hidden = false;
+  if (siteMobileNav) siteMobileNav.classList.remove('open');
+  if (siteNav) siteNav.style.display = 'none';
+  document.body.style.overflow = 'hidden';
   showSlide(currentIndex);
 }
  
 function closeViewer() {
   clearTimeout(slideTimer);
+  clearTimeout(holdTimer);
   viewer.hidden = true;
   progressRow.innerHTML = '';
+  if (siteNav) siteNav.style.display = '';
+  document.body.style.overflow = '';
   renderStoryBar();
 }
  
