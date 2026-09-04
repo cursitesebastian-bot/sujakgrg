@@ -1,5 +1,4 @@
--- Run this in Supabase SQL Editor
- 
+
 create table stories (
   id uuid default gen_random_uuid() primary key,
   name text not null,
@@ -27,4 +26,4 @@ create policy "Public can delete stories"
   using (true);
 
 delete from stories;
-select id, name, created_at from stories order by created_at desc;
+
